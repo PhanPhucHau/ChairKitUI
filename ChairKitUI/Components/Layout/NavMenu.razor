@@ -1,30 +1,27 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">ChairKitUI</a>
-    </div>
-</div>
+﻿
+<style>
+    .mud-navmenu {
+        overflow-y: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+        .mud-navmenu::-webkit-scrollbar {
+            display: none;
+        }
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+</style>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
+<MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
+    <MudNavLink Match="NavLinkMatch.Prefix" Href="/dashboard" Icon="@Icons.Material.Filled.GridView">Tổng quan</MudNavLink>
+
+    <MudNavGroup Title="Tài khoản" Icon="@Icons.Material.Filled.SupervisedUserCircle" Expanded="false">
+        <MudNavLink Match="NavLinkMatch.Prefix" Href="/hotel" Icon="@Icons.Material.Filled.Hotel">Hotel</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.Prefix" Href="/user" Icon="@Icons.Material.Filled.SupervisedUserCircle">Người dùng</MudNavLink>
+    </MudNavGroup>
+
+    <MudNavLink Match="NavLinkMatch.Prefix" Href="/setting" Icon="@Icons.Material.Filled.SettingsSuggest">Cài đặt</MudNavLink>
+
+</MudNavMenu>
 

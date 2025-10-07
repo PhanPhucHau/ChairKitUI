@@ -1,47 +1,107 @@
-﻿@inherits LayoutComponentBase
-
+﻿@using System.Globalization
+@using ChairKitUI.Components.Themes
+@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
 <style>
+    html{
+        font-size: 90% !important;
+    }
     .mud-snackbar-location-top-right {
-        top: -10px !important;
+        top: -12px !important;
         right: 8px !important
     }
 
-    .mud-grid-item {
-        z-index: 999 !important;
+    .mud-toolbar{
+        border-bottom: 1px solid #c9c9c954;
     }
+
+    .mud-dialog .mud-dialog-title .mud-button-close {
+        color: #fff !important;
+    }
+
+    .dialog-background-title {
+        background-color: var(--mud-palette-primary);
+        padding: 8px 24px !important;
+        margin-bottom: 12px !important;
+    }
+
 </style>
 
-<MudThemeProvider Theme="_customtheme" />
-<MudThemeProvider />
+
+<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-
 <MudLayout>
-    <MudMainContent>
+    <ReloadPageLoading />
+    <MudAppBar Elevation="1" Dense>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Align="Align.Center" Style="font-weight:500; font-size:25px; color: #fff; letter-spacing: 2px;">Chair<span style="color: #F9A825; font-weight:500; font-size:25px;">Kit</span></MudText>
+        <MudSpacer />
+
+     
+        <MudTooltip Text="@(_isDarkMode ? "Light mode" : "Dark mode")" Color="Color.Tertiary" Placement="Placement.Bottom" Arrow="true">
+            <MudIconButton Icon="@(_isDarkMode ? Icons.Material.Filled.LightMode : @Icons.Material.Rounded.DarkMode)"
+                           Color="Color.Inherit"
+                           OnClick="@ToggleDarkMode" />
+        </MudTooltip>
+           
+      @*   <Account /> *@
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+    </MudAppBar>
+    <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Docked" Elevation="2">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent Class="pt-11 pa-4">
         @Body
     </MudMainContent>
+ 
+
 </MudLayout>
 
-@code {
-    private MudTheme _customtheme = new MudTheme()
-    {
-        PaletteLight = new PaletteLight()
-        {
-            Secondary = "#FBEAED",
-            Error = Colors.Red.Darken3,
-            Warning = Colors.Yellow.Darken3,
-            Success = Colors.Green.Darken3,
-            AppbarBackground = "#8aaae5"
-        },
-        PaletteDark = new PaletteDark()
-        {
-            Primary = Colors.Blue.Darken1,
-            Secondary = "#FBEAED",
-            Error = Colors.Red.Darken3,
-            Warning = Colors.Yellow.Darken3,
-            Success = Colors.Green.Darken3,
-        }
-    };
 
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    private bool _drawerOpen = true;
+    private bool _isDarkMode = true;
+    private MudTheme? _theme = null;
+
+
+    private DateTime dateTimeNow => DateTime.Now;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var customTheme = new CustomTheme();
+        _theme = customTheme.GetLightTheme();
+        _theme = customTheme.GetDarkTheme();
+    }
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private async Task ToggleDarkMode()
+    {
+        _isDarkMode = !_isDarkMode;
+    }
+    
+  
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+          
+        }
+        await Task.CompletedTask;
+    }
 }
+
+
