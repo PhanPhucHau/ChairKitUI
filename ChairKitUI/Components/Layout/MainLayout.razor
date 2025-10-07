@@ -1,0 +1,47 @@
+﻿@inherits LayoutComponentBase
+
+<style>
+    .mud-snackbar-location-top-right {
+        top: -10px !important;
+        right: 8px !important
+    }
+
+    .mud-grid-item {
+        z-index: 999 !important;
+    }
+</style>
+
+<MudThemeProvider Theme="_customtheme" />
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _customtheme = new MudTheme()
+    {
+        PaletteLight = new PaletteLight()
+        {
+            Secondary = "#FBEAED",
+            Error = Colors.Red.Darken3,
+            Warning = Colors.Yellow.Darken3,
+            Success = Colors.Green.Darken3,
+            AppbarBackground = "#8aaae5"
+        },
+        PaletteDark = new PaletteDark()
+        {
+            Primary = Colors.Blue.Darken1,
+            Secondary = "#FBEAED",
+            Error = Colors.Red.Darken3,
+            Warning = Colors.Yellow.Darken3,
+            Success = Colors.Green.Darken3,
+        }
+    };
+
+}

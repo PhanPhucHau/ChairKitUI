@@ -1,0 +1,48 @@
+﻿<style>
+    .gif-container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        margin-top: 24px;
+    }
+
+        .gif-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+</style>
+
+@if (_isLoadingReload)
+{
+    <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: #000; opacity: 1;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+            <div style="display:flex; flex-direction:column; align-items: center;">
+                <img src="./Images/icon.png" alt="Alternate Text" style="width: 100px;" />
+                <MudText Align="Align.Center" Style="font-weight:bold; color: #fff; font-size:48px; letter-spacing: 2px;">Chair<span style="color: #F9A825; font-weight:bold; font-size:48px;">Kit</span></MudText>
+            </div>
+            <div class="gif-container">
+                <img src="./Images/ReloadLoadingAnimation.gif">
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private bool _isLoadingReload = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Task.Delay(5000); // Delay for 5 seconds
+            _isLoadingReload = false;
+            StateHasChanged(); // Trigger UI refresh
+        }
+    }
+   
+}
